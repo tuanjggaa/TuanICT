@@ -103,7 +103,7 @@
 		  Let's use this example to clarify the neighborship types:
 		  </p>
 		  <img class="img-fluid" src="img/bgpexample_1.png" alt="">
-		  <p>Here's the configuration of R3 and R4: <br><br>
+		<p>Here's the configuration of R3 and R4: <br><br>
 		<span style="font-weight:bold">
 		R3(config)#do sh run | sec router bgp <br>
 		router bgp 340 <br>
@@ -124,20 +124,20 @@
 		</span>
 		<img class="img-fluid" src="img/bgpexample_1_1.png" alt="">
 		The <span style="font-weight:bold">i</span> sign in the Path means that the original router maybe use network cmd to introduce this route to BGP.
-		  <br>
+		<br>
 		In this example, we can see when two routers form an iBGP relationship, the router adsvertises the route didn't add the <span style="font-weight:bold">Path</span> number.
 		<br> What about eBGP neighbor?
 		<br> Let's consider R3 and R2. <br>
 		<br> R2 and R3 configuration for eBGP:
 		<br>
 		</p>
-		<img class="img-fluid" src="img/bgpexample_1_2.png" alt=""> 
+		<img class="img-fluid" src="img/bgpexample_1_2.PNG" alt=""> 
 		<br><br>
-		<img class="img-fluid" src="img/bgpexample_1_3.png" alt="">
+		<img class="img-fluid" src="img/bgpexample_1_3.PNG" alt="">
 		<br><br>
 		R2's BGP table: 
 		<br>
-		<img class="img-fluid" src="img/bgpexample_1_4.png" alt="">
+		<img class="img-fluid" src="img/bgpexample_1_4.PNG" alt="">
 		When R3 adsvertises the 44.44.44.0/24 route to R2, R3 adds its AS to the <span style="font-weight:bold">Path</span>.
 		<br>
 		If you encouter a BGP route in the BGP table like this:
