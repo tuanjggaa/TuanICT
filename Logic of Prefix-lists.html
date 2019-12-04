@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>TuanICT's Blog | My First Post</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index">TuanICT</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="post">Sample Post</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/post-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>The Logic of Prefix-list</h1>
+            <h2 class="subheading">How do prefix-lists work</h2>
+            <span class="meta">Posted by
+              <a href="about">TuanICT</a>
+            on Dec 4th, 2019</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+          <!--<h2 class="section-heading">The Final Frontier</h2>-->
+
+         
+          <p>The first thing you have to know is <span style="font-weight:bold"> Prefix-list</span>'s usage is the same as access-list, <span style="font-weight:bold"> Prefix-list</span> is tied to Distribute list in order to filtering unnecessary routes. </p>
+          <p>Let's divide the problem into 4 scenarios: <br>
+            - Match exact routes. <br>
+            - Match routes using GE only. <br>
+            - Match routes LE only. <br>
+            - Match routes using GE and LE.
+          </p> 
+          <p>
+            <span style="font-weight:bold; color:red ">Match exact routes</span> <br>
+            <span style="font-weight:bold">Ip prefix-list MyList permit 10.11.12.0/24 </span><br>
+            This means the first 24 bits match exact 10.11.12 and the subnet mask must be exactly: 24. <br>
+            Rewrite into access-list: <span style="font-weight:bold">Ip access-list 101 permit 10.11.12.0 0.0.0.255</span>
+            <br>
+            <br>
+            <span style="font-weight:bold; color:red ">Match routes using GE only.</span> <br>
+            Condition: <span style="font-weight:bold">prefix-len < ge < ge</span> <br>
+            <span style="font-weight:bold">Ip prefix-list MyList permit 10.11.12.0/24 ge 25</span><br>
+            This means the first 24 bits match exact 10.11.12 and the subnet mask must be [25,32]<br>
+            So 10.11.12.13/24 won't match this statement and will be filtered. 
+            <br> 
+            <br>
+            <span style="font-weight:bold; color:red ">Match routes using LE only.</span> <br>
+            Condition: <span style="font-weight:bold">prefix-len < ge < ge</span> <br>
+            <span style="font-weight:bold">Ip prefix-list MyList permit 10.11.12.0/24 le 30</span><br>
+            This means the first 24 bits match exact 10.11.12 and the subnet mask must be [24,30]<br>
+             <br> 
+            <br>
+            <span style="font-weight:bold; color:red ">Match routes using LE and GE.</span> <br>
+            Condition: <span style="font-weight:bold">prefix-len < ge < ge</span> <br>
+            <span style="font-weight:bold">Ip prefix-list MyList permit 10.11.12.0/24 ge 30 le 32</span><br>
+            This means the first 24 bits match exact 10.11.12 and the subnet mask must be [30,32]<br>
+             <br> 
+            <br>
+            <span style="font-weight:bold; color:red ">More scenarios</span> <br>
+            Condition: <span style="font-weight:bold">prefix-len < ge < ge</span> <br>
+            <span style="font-weight:bold">Ip prefix-list MyList permit 0.0.0.0/0 le 32</span><br>
+            This means permit everything<br>
+
+
+          </p>
+          
+				<!--<img class="img-fluid" src="img/post-sample-image.jpg" alt="">-->
+          
+          <!--<span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>-->
+
+         
+         
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="https://www.linkedin.com/in/tuan-tran-anh-13093b147/">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/tuan.tran.1998">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://github.com/tuanjggaa">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; TuanICT 2019</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
