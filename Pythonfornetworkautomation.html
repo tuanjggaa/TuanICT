@@ -78,17 +78,17 @@
           <h2> Working with text files</h2>
 		  <span style="font-weight:bold; color:red ">Open the file as readonly mode</span>
 			<pre>
-f = open('filename','r') // open the file as readonly
-	print(f) // print the whole content of a file
-f.close() // close the file
-print(f.closed) // check if the file is closed
+f = open('filename','r') # open the file as readonly
+	print(f) # print the whole content of a file
+f.close() # close the file
+print(f.closed) # check if the file is closed
 			</pre>
 		  <span style="font-weight:bold; color:red ">A more "standardized way"</span>
 			<pre>
 with open('filename','r') as file:
-	//do something with your text
+	#do something with your text
 	print(file.read())
-// you don't have to close the file, it'll automatically close the file for you
+# you don't have to close the file, it'll automatically close the file for you
 			</pre>
 			<span style="font-weight:bold; color:red ">Real examples</span>
 			<h6>a.txt </h6>
@@ -225,7 +225,46 @@ second line
 Process finished with exit code 0			
 			</pre>
 
+			<span style="font-weight:bold; color:red ">Writing to a file</span>
+			<h6>code</h6>
+			<pre> 
+with open('a.txt','w') as f:
+	f.write('MyFirstLine\n')
+	f.write('MySecondLine')	
+# Please keep in mind that 'w' mode will overwrite the whole file, if a file doesn't exist, it'll create a new file.
+# Allow write only
+			</pre>
+			<pre>
+with open('a.txt','a') as f:
+	f.write('\nMyLastLine')
+# Please keep in mind that 'a' mode will continue to write at the end of file(EOF)
+# Allow write only
+			</pre>
+			<pre>
+with open('a.txt','r+') as f:
+	f.write('This is a line added by r+')
+# Read & Write
+# Write at the beginning of file, overwrite the beginning content. Can use seek()
+# Does not create a file if it doesn't exist.
+Textfile content: 'my text file'
+with open('mytextfile.txt','r+') as f:
+	f.write('r+')
+#result: 
+'my r+xt file'
+			</pre>
+			<pre>
+with open('mytextfile.txt','a+') as f:
+	f.write('a+')
+	f.seek(0) # read from beginning of the file, you have to specify the reading position
+	print(f.read())
+Textfile content: 'my text file'
+#result:
+ 'my text filea+'
+# Can not use seek() for write, create a file if it doesn't exist
+			</pre>
 
+			
+			
 
 
         </div>
