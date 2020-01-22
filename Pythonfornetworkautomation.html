@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>TuanICT's Blog | Python for network automation</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index">TuanICT</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="post">Sample Post</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/post-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Python for network automation</h1>
+            <h2 class="subheading">Automation still requires human interaction when it goes wrong</h2>
+            <span class="meta">Posted by
+              <a href="about">TuanICT</a>
+              on January 22, 2020</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h2> Working with text files</h2>
+		  <span style="font-weight:bold; color:red ">Open the file as readonly mode</span>
+			<pre>
+f = open('filename','r') // open the file as readonly
+	print(f) // print the whole content of a file
+f.close() // close the file
+print(f.closed) // check if the file is closed
+			</pre>
+		  <span style="font-weight:bold; color:red ">A more "standardized way"</span>
+			<pre>
+with open('filename','r') as file:
+	//do something with your text
+	print(file.read())
+// you don't have to close the file, it'll automatically close the file for you
+			</pre>
+			<span style="font-weight:bold; color:red ">Real examples</span>
+			<h6>a.txt </h6>
+			<pre>
+first line
+second line
+			</pre>
+			<h6>code </h6>
+			<pre>
+with open ('a.txt','r') as file:
+	print(file.read())
+			</pre>
+			<h6>result </h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/Read_File_In_A_Standardize_Way.py
+first line
+second line
+Process finished with exit code 0
+			</pre>
+			<h6>read # of letters </h6>
+			<pre>
+with open('a.txt', 'r') as file:
+	print(file.read(5))
+			</pre>
+			<h6>result </h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/Read_File_In_A_Standardize_Way.py
+first
+Process finished with exit code 0
+			</pre>
+			<h6>read file as position X</h6>
+			<pre>
+with open('a.txt', 'r') as file:
+	file.seek(5)
+	print(file.read())
+			</pre>
+			<h6>result</h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/Read_File_In_A_Standardize_Way.py
+ line
+second line
+Process finished with exit code 0
+			</pre>
+			<h6>read, tell, seek</h6>
+			<pre>
+with open('a.txt','r') as file:
+   print(file.seek(15))
+   print(file.tell())
+   print(file.read(1))
+   print(file.tell())
+   print(file.seek(22))
+   print(file.read())
+   print(file.tell())
+   print(file.read(25))
+			</pre>
+			<h6>result </h6>
+
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/TempEditor.py
+15
+15
+o
+16
+22
+e
+23
+
+
+Process finished with exit code 0			
+			</pre>
+			<h6>explaination </h6>
+			<pre>
+note: sp = space, default new line for window is \r\n, for unix,linux is \n
+1 2 3 4 5 6  7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
+f i r s t sp l i n e  \r \n s  e  c  o  n  d  l  i  n  e    
+			</pre>
+			<span style="font-weight:bold; color:red ">read the file into a list</span>
+			<h6>code</h6>
+			<pre>
+with open('a.txt','r') as file:
+   mylist = file.read().splitlines()
+   print(mylist)
+			</pre>
+			<h6>result</h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/TempEditor.py
+['first line', 'second line']
+
+Process finished with exit code 0
+			
+			</pre>
+			<h6>code </h6>
+			<pre>
+with open('a.txt','r') as file:
+   mylist = file.readlines()
+   print(mylist)
+			</pre>
+			<h6>result </h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/TempEditor.py
+['first line\n', 'second line']
+
+Process finished with exit code 0
+
+			</pre>
+			<h6>code </h6>
+			<pre>
+mylist = []
+with open('a.txt','r') as file:
+   for line in file:
+      mylist.append(line)
+
+print(mylist)
+
+			</pre>
+			<h6>result </h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/TempEditor.py
+['first line\n', 'second line']
+
+Process finished with exit code 0
+			</pre>
+			<h6>code </h6>
+			<pre>
+with open('a.txt','r') as file:
+   for line in file:
+      print (line,end='')			
+			</pre>
+			<h6>result </h6>
+			<pre>
+C:\Users\ADMIN\PycharmProjects\my_python_project\venv\Scripts\python.exe C:/Users/ADMIN/PycharmProjects/my_python_project/TempEditor.py
+first line
+second line
+Process finished with exit code 0			
+			</pre>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="https://www.linkedin.com/in/tuan-tran-anh-13093b147/">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/tuan.tran.1998">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://github.com/tuanjggaa">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; TuanICT 2019</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
