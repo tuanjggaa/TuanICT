@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>TuanICT's Blog | Network and System </title>
+  <title>TuanICT's Blog | Python for network automation</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +25,7 @@
 
 <body>
 
+  
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -50,127 +51,101 @@
     </div>
   </nav>
 
+
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('img/post-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>ICT Blog</h1>
-            <span class="subheading">Knowledge is power</span>
+          <div class="post-heading">
+            <h1>Python for network automation</h1>
+            <h2 class="subheading">Automation still requires human interaction when it goes wrong</h2>
+            <span class="meta">Posted by
+              <a href="about">TuanICT</a>
+              on February 03, 2020</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h2>Getting devices's information using Telnetlib </h2>
 
-        <div class="post-preview">
-          <a href="GettingDevice'sInfomation">
-            <h2 class="post-title">
-              Python for network automation
-            </h2>
-            <h3 class="post-subtitle">
-              Getting device's information
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="about">TuanICT</a>
-            on Febuary 03, 2020</p>
-        </div>
+          <img class="img-fluid" src="img/Deviceinformation.PNG" alt="">
+          <span class="caption text-muted">Topology</span>
+          <span style="font-weight:bold; color:red ">Code:</span>
+          <pre>
 
-		    <div class="post-preview">
-          <a href="Pythonfornetworkautomation">
-            <h2 class="post-title">
-              Python for network automation
-            </h2>
-            <h3 class="post-subtitle">
-              Working with text files
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="about">TuanICT</a>
-            on January 22, 2020</p>
-        </div>
+import csv
+import telnetlib
+import time
 
-        <div class="post-preview">
-          <a href="Prefix-list Logic">
-            <h2 class="post-title">
-              The logic of prefix-lists
-            </h2>
-            <h3 class="post-subtitle">
-              How do prefix-lists work
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="about">TuanICT</a>
-            on Dec 4, 2019</p>
-        </div>
+with open('Device.csv','r',) as f:
+    reader = csv.reader(f)
+    device = []
+    flag = 0
+    for row in reader:
+        if flag > 0:
+            device.append(row)
+        flag +=1
 
-	  
-	  
-	  
-	  <div class="post-preview">
-          <a href="ABeginner'sGuidetoUnderstandBGP">
-            <h2 class="post-title">
-              A Beginner's guide to BGP
-            </h2>
-            <h3 class="post-subtitle">
-              BGP is not complicated!
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="about">TuanICT</a>
-            on November 30, 2019</p>
-        </div>
-	  
-        <div class="post-preview">
-          <a href="myfirstpost">
-            <h2 class="post-title">
-              My First Post
-            </h2>
-            <h3 class="post-subtitle">
-              First of all, let me introduce myself to you!
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="about">TuanICT</a>
-            on November 29, 2019</p>
-        </div>
-		
-		
-		
-        <hr>
-        <div class="post-preview">
-          <a href="post.html">
-            <h2 class="post-title">
-              Sample Post
-            </h2>
-			<h3 class="post-subtitle">
-              #Sample Post
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="about">TuanICT</a>
-            on November 29, 2019</p>
-        </div>
-        
-		
-        <!-- Pager -->
-        <!-- 
-		<div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div>
+    x = 0
+    d = 1
+    while x < len(device):
 
-		-->
+        telnet = telnetlib.Telnet(device[x][0])
+        telnet.read_until(b'Username: ')
+        username = device[x][1]
+        telnet.write(username.encode() + b'\n')
+        telnet.read_until(b'Password: ')
+        password = device[x][2]
+        telnet.write(password.encode() + b'\n')
+        telnet.write(b'enable\n')
+        telnet.write(b'cisco\n')
+        telnet.write(b'show ip int br\n')
+        telnet.write(b'exit\n')
+        allresult = telnet.read_all().decode()
+        formatedresult = allresult.splitlines()
+
+        n = 0
+        deviceresult = []
+        while n < len(formatedresult):
+            if 'Interface' in formatedresult[n] or 'Ethernet' in formatedresult[n]:
+                deviceresult.append(formatedresult[n])
+
+            n+=1
+
+
+        devicename = 'Device'+str(d)+'.csv'
+        with open(devicename,'w') as f:
+            writer = csv.writer(f)
+            writer.writerow (deviceresult[0].split())
+            p =1
+            while p < len(deviceresult):
+                writer.writerow(deviceresult[p].split())
+                p+=1
+
+
+        d+=1
+        x+=1
+        time.sleep(2)
+          </pre>
+          <span style="font-weight:bold; color:red ">Result:</span>
+          <img class="img-fluid" src="img/Device1.PNG" alt="">
+          <img class="img-fluid" src="img/Device2.PNG" alt="">
+
+    
+
+        </div>
       </div>
     </div>
-  </div>
+  </article>
 
   <hr>
 
